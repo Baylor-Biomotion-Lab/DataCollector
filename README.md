@@ -1,2 +1,2 @@
 # DataCollector
-MATLAB software for importing Vicon data. 
+MATLAB software for importing Vicon biomotion data. 
