@@ -24,7 +24,7 @@ for ID=1:IDs
             otherwise
                 error('Other forceplate detected, consult')
         end
-    else
+    elseif strcmp(name, 'Noraxon Desk Receiver')
         deviceNumbers(ID)=42;
     end
                 
