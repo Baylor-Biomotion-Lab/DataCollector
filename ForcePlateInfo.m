@@ -22,11 +22,11 @@ function [ ForcePlateData, deviceNumbers] = ForcePlateInfo( vicon )
 % end
 
 [ deviceNumbers, FP1, FP2, FP3 ] = ForcePlateNum(vicon);
+if isnan(FP1) && isnan(FP2) && isnan(FP3)
+    ForcePlateData=NaN;
+    return
+end
 
-% Manually relate plate number to device ID (DO THIS)
-% FP1=deviceIDs(1);
-% FP2=deviceIDs(2);
-% FP3=nan;
 
 %Appropriate deviceOutputIDs
 Force=1;
