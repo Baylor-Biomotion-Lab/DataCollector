@@ -7,9 +7,13 @@ deviceIDs=vicon.GetDeviceIDs;
 IDs=length(deviceIDs);
 deviceNumbers=zeros(1,IDs);
 for ID=1:IDs
-[~, type, ~, ~, forceplate, ~] = vicon.GetDeviceDetails(deviceIDs(ID));
-% If the forceplates are not named, the only way to really match them to
-% their deviceID consistently is to look at the world translation. 
+    try
+        [name, type, ~, ~, forceplate, ~] = vicon.GetDeviceDetails(deviceIDs(ID));
+    catch
+        continue
+    end
+    % If the forceplates are not named, the only way to really match them to
+    % their deviceID consistently is to look at the world translation.
     if strcmp(type, 'ForcePlate')
         switch forceplate.WorldT(2)
             case -790 %Force Plate 1
@@ -26,8 +30,10 @@ for ID=1:IDs
         end
     elseif strcmp(name, 'Noraxon Desk Receiver')
         deviceNumbers(ID)=42;
+    else
+        continue
     end
-                
+    
 end
 
 end
