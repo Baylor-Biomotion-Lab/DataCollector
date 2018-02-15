@@ -88,6 +88,12 @@ for REvent=1:REvents
 end
 
 % Get rid of all 0
+if ~exist('LeftStancePhase','var')
+    LeftStancePhase = 0;
+end
+if ~exist('RightStancePhase','var')
+    RightStancePhase = 0;
+end
 [RStC,~]=size(RightStancePhase);
 [LStC,~]=size(LeftStancePhase);
 

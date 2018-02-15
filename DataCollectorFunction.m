@@ -1,8 +1,9 @@
+function DataCollectorFunction
 % Main script for collecting and analyzing data from Vicon
 clearvars -Except FileLocation Errors errorCount ToPull
 %% User Input
 ModifyFootEvents=0; %Set to 1 if you want to put in your own foot events
-saveFile='H:\Research\MATLAB\VAC\CollectedData\BlueMarble';
+saveFile='H:\Research\MATLAB\VAC\CollectedData\RunningStudy2';
 %% Model Output Information
 vicon=ViconNexus(); %for more info put doc ViconNexus into command line
 vicon.Connect()
@@ -49,15 +50,14 @@ disp('Data successfully analyzed...')
 if GaitFail~=1
     [RightStride, LeftStride]=  StrideFinder(RightSwingPhase, LeftSwingPhase, RightStancePhase, LeftStancePhase, trajectories, vicon, S);
 end
-%% Vital Info (Version 2.2)
-[ TrialInfo, SubjectParams ] = GetVitals( vicon, 'R', S );
+%% Vital Info (Version 2.x)
+[ TrialInfo ] = GetVitals( vicon, 'R' );
 %% Save Data
 clearvars -Except ModelOutput ModelOutputHelp S trajectories...
     TrajectoryHelp ForcePlateData vicon velocities accelerations...
     FootEventStruct FootEventCell EMGTable RightStancePhase...
     LeftStancePhase RightSwingPhase LeftSwingPhase RightStride LeftStride...
-    FileLocation Errors errorCount ToPull EMGProcessed FPD saveFile...
-    TrialInfo SubjectParams
+    FileLocation Errors errorCount ToPull EMGProcessed FPD saveFile TrialInfo
 MarkerNames=vicon.GetMarkerNames(S)';
 
 %Put filepath here for where you want to save data
@@ -66,3 +66,7 @@ cd(saveFile)
 [~, TrialName]=vicon.GetTrialName;
 fprintf('Finished with trial %s \n', TrialName)
 save(TrialName);
+
+
+end
+

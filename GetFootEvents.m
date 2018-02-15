@@ -7,10 +7,10 @@ function [ FootEventStruct, FootEventCell ] = GetFootEvents( vicon,S, Modify )
 [ RFSframes, RFSoffsets] = vicon.GetEvents( S, 'Right', 'Foot Strike' );
 [ RFOframes, RFOoffsets] = vicon.GetEvents( S, 'Right', 'Foot Off' );
 
-LFSframes=LFSframes'; LFSoffsets=LFSoffsets';
-LFOframes=LFOframes'; LFOoffsets=LFOoffsets';
-RFSframes=RFSframes'; RFSoffsets=RFSoffsets';
-RFOframes=RFOframes'; RFOoffsets=RFOoffsets';
+LFSframes=double(LFSframes'); LFSoffsets=double(LFSoffsets');
+LFOframes=double(LFOframes'); LFOoffsets=double(LFOoffsets');
+RFSframes=double(RFSframes'); RFSoffsets=double(RFSoffsets');
+RFOframes=double(RFOframes'); RFOoffsets=double(RFOoffsets');
 
 %% Revise this later
 LFScell=cell(length(LFSframes),2);
