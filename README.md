@@ -24,8 +24,8 @@
 MATLAB software for importing Vicon biomotion data.
 # Getting Up and Running
 ## Before Using Vicon:
-1. In the user input section, set ModifyFootEvents to 0. When you have determined that foot events should be added, set it to 1. 
-2. Change saveFile to wherever you want to save the file. 
+1. In the user input section, set ```ModifyFootEvents``` to 0. When you have determined that foot events should be added, set it to 1. 
+2. Change ```saveFile``` to wherever you want to save the file. 
 ## When Using Vicon:
 1. In Vicon Nexus 2.6.x, set up a new pipeline. 
    * If there is a DataCollector pipeline, do not create a new pipeline. 
@@ -51,4 +51,23 @@ The main script is called DataCollector.m. All functions are called by this scri
 
 ## Auxiliary Files
 Files which serve a useful purpose, but do not contribute *as much* to the main gathering/processing of data. 
-* UserFootEvents.m - Is activated by setting ModifyFootEvents = 1 in the DataCollector script. Allows user to manually input values for foot events that Vicon did not detect. 
+* UserFootEvents.m - Is activated by setting ModifyFootEvents = 1 in the DataCollector script. Allows user to manually input values for foot events that Vicon did not detect.
+
+# Utilizing Data from VAC DataCollector
+Data from DataCollector is saved as a .mat file and uses the same name as the trial name in Vicon. It contains nearly all the output data from Vicon.
+## Kinematics
+Kinematic data is found in ModelOutputHelp, which is data type table. Column 2 has all of the model outputs from Vicon (hip angles, knee moments, etc.). Model outputs from Vicon will change from file to file depending on a number of variables, so you'll have to find what row corresponds to what variable. 
+For example, if we wanted to find right hip angles we would type:
+```
+varNo = find(strcmp(ModelOutputHelp{:,2}, 'RHipAngles'));
+```
+Then we will use this to access this row and grab the flexion angles:
+```
+RHipFlexion = (ModelOutputHelp{varNo,3}{1}(:,1))
+```
+This is a bit complicated, so I've written a helper function to make it easier to perform. It will also auto-plot the data for you. If I wanted to plot it using the helper function I would type:
+```
+
+```
+It would generate the following file:
+![alt text](https://github.com/Baylor-Biomotion-Lab/Images/blob/master/hip%20flexion.png "Example Flexion")
