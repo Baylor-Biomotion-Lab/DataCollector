@@ -67,7 +67,12 @@ RHipFlexion = (ModelOutputHelp{varNo,3}{1}(:,1))
 ```
 This is a bit complicated, so I've written a helper function to make it easier to perform. It will also auto-plot the data for you. If I wanted to plot it using the helper function I would type:
 ```
-
+hipData = prettyPlots('trial','R_Subj10_Free_335_TR02','whole','RHipAngles','x');
 ```
-It would generate the following file:
+It would generate the following figure:
 ![alt text](https://github.com/Baylor-Biomotion-Lab/Images/blob/master/hip%20flexion.png "Example Flexion")
+Information for the prettyPlots function can be found by typing:
+```
+help prettyPlots
+```
+into the command window. Note I will expect you to be able to use this on all functions you write and use that are considered "finalized". One last thing to note is that the data for kinematics is a matrix inside of a cell inside of a table. Definitely not the most ideal way to access the data. Anyway the data in the matrix is stored in 3 columns. Column 1 is generally flexion/extension, column 2 is ad/abduction, and column 3 is internal/external rotation. 
