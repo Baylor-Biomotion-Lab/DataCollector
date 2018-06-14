@@ -67,7 +67,7 @@ RHipFlexion = (ModelOutputHelp{varNo,3}{1}(:,1))
 ```
 This is a bit complicated, so I've written a helper function to make it easier to perform. It will also auto-plot the data for you. If I wanted to plot it using the helper function I would type:
 ```
-hipData = prettyPlots('trial','R_Subj10_Free_335_TR02','whole','RHipAngles','x');
+hipData = prettyPlots('trial','R_Subj10_Free_335_TR02','whole','RHipAngles','x',0);
 ```
 It would generate the following figure:
 ![alt text](https://github.com/Baylor-Biomotion-Lab/Images/blob/master/hip%20flexion.png "Example Flexion")
