@@ -26,7 +26,8 @@ for ID=1:IDs
                 deviceNumbers(ID)=3;
                 FP3=deviceIDs(ID);
             otherwise
-                error('Other forceplate detected, consult')
+                warning('Other forceplate orientation detected, ignoring forceplate data.')
+                return
         end
     elseif strcmp(name, 'Noraxon Desk Receiver')
         deviceNumbers(ID)=42;
@@ -35,6 +36,6 @@ for ID=1:IDs
     end
     
 end
-
+disp('Force Data successfully imported...')
 end
 

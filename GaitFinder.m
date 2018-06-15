@@ -102,11 +102,14 @@ end
 if isempty(RightStancePhase) || sum(RightStancePhase(1,:))<1
     warning('No proper foot events found for right stance phase.')
     RightStancePhase=[];
-    
+else
+    disp('Right gait successfully found...')
 end
 if isempty(LeftStancePhase) || sum(LeftStancePhase(1,:))<1
     warning('No proper foot events found for left stance phase.')
     LeftStancePhase=[];
+else
+    disp('Left gait successfully found...')
 end
 
 %Find the next heel strike and mark it as swing phase
@@ -117,6 +120,6 @@ end
 if length(LeftStancePhase)>1
     LeftStancePhase(:,4)=[];
 end
-
+end
 % Check Data "Goodness" off Several Criteria
 % DataGoodness( RightStancePhase, LeftStancePhase, LeftFootEvent, RightFootEvent, vicon )

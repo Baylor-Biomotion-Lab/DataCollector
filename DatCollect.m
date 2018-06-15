@@ -1,7 +1,8 @@
+function [] = DatCollect()
 % Main script for collecting and analyzing data from Vicon
 %% User Input
 ModifyFootEvents=0; %Set to 1 if you want to put in your own foot events
-saveFile='H:\Research\MATLAB\VAC\CollectedData\VRTest';
+saveFile='H:\Research\MATLAB\VAC\CollectedData\Carley2';
 %% Model Output Information
 vicon=ViconNexus(); %for more info put doc ViconNexus into command line
 vicon.Connect()
@@ -22,6 +23,7 @@ ModelOutput=data';
 disp('Model data successfuly imported...')
 %% Force Plate Information
 [ ForcePlateData, FPD, ~]=ForcePlateInfo(vicon);
+disp('Force Data successfully imported...')
 %% EMG Data
 try
     [ EMGData, EMGNames, EMGTable, EMGProcessed ] = GetEMGData( vicon );
@@ -38,11 +40,13 @@ disp('Trajectories successfully imported...')
 % Run a pipeline which runs "Autocorrelate Events" and "Detect Events From Forceplate" to get all foot marker
 % data
 [FootEventStruct, FootEventCell]=GetFootEvents( vicon, S, ModifyFootEvents );
+
 %% Gait Analysis
 [FootEventCell, RightStancePhase, LeftStancePhase, RightSwingPhase, LeftSwingPhase]=GaitFinder(FootEventCell, trajectories, vicon, S);
+disp('Gaits successfully found...')
 [ModelOutput, ModelOutputHelp, FootEventCell, GaitFail]=MaxMin(ModelOutput,ModelOutputHelp, FootEventCell, RightStancePhase, LeftStancePhase, RightSwingPhase, LeftSwingPhase);
 disp('Data successfully analyzed...')
-if GaitFail~=1 
+if GaitFail~=1
     [RightStride, LeftStride]=  StrideFinder(RightSwingPhase, LeftSwingPhase, RightStancePhase, LeftStancePhase, trajectories, vicon, S);
 end
 %% Vital Info (Version 2.2)
@@ -62,3 +66,4 @@ cd(saveFile)
 [~, TrialName]=vicon.GetTrialName;
 fprintf('Finished with trial %s \n', TrialName)
 save(TrialName);
+end
