@@ -33,7 +33,7 @@ z=3;
 %forceplate orientation is used.
 
 % FPD will be a cell, ForcePlateData will be a structure that is
-% likely never used. 
+% likely never used.
 FPD=cell(3,1);
 
 %Force Plate 1
@@ -54,6 +54,9 @@ if ~isnan(FP1)
     [CxFP1, ~, ~] = vicon.GetDeviceChannel( FP1, Center, x );
     [CyFP1, ~, ~] = vicon.GetDeviceChannel( FP1, Center, y );
     [CzFP1, ~, ~] = vicon.GetDeviceChannel( FP1, Center, z );
+    % Correct for forceplate location
+    CxFP1 = CxFP1 + 200;
+    CyFP1 = CyFP1 - 790;
     FPD{1}{3}=[CxFP1', CyFP1', CzFP1'];
 else
     FPD{1}=NaN;
@@ -75,6 +78,9 @@ if ~isnan(FP2)
     [CxFP2, ~, ~] = vicon.GetDeviceChannel( FP2, Center, x );
     [CyFP2, ~, ~] = vicon.GetDeviceChannel( FP2, Center, y );
     [CzFP2, ~, ~] = vicon.GetDeviceChannel( FP2, Center, z );
+    % Correct for forceplate location
+    CxFP2 = CxFP2 + 200;
+    CyFP2 = CyFP2 + 300;
     FPD{2}{3}=[CxFP2', CyFP2', CzFP2'];
 else
     FPD{2}=NaN;
@@ -96,6 +102,9 @@ if ~isnan(FP3)
     [CxFP3, ~, ~] = vicon.GetDeviceChannel( FP3, Center, x );
     [CyFP3, ~, ~] = vicon.GetDeviceChannel( FP3, Center, y );
     [CzFP3, ~, ~] = vicon.GetDeviceChannel( FP3, Center, z );
+    % Correct for forceplate location
+    CxFP3 = CxFP3 + 200;
+    CyFP3 = CyFP3 + 905;
     FPD{3}{3}=[CxFP3', CyFP3', CzFP3'];
 else
     FPD{3}=NaN;
