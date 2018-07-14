@@ -1,7 +1,10 @@
-% Main script for collecting and analyzing data from Vicon
+%DataCollector is the main script for collecting and analyzing Vicon data
+% For more help, visit our Github page:
+% https://github.com/Baylor-Biomotion-Lab/DataCollector
+clear
 %% User Input
 ModifyFootEvents=0; %Set to 1 if you want to put in your own foot events
-saveFile='H:\Research\MATLAB\VAC\CollectedData\VRTest';
+saveFile='H:\Research\MATLAB\VAC\CollectedData\VRehabVive';
 %% Model Output Information
 vicon=ViconNexus(); %for more info put doc ViconNexus into command line
 vicon.Connect()
@@ -47,18 +50,19 @@ if GaitFail~=1
 end
 %% Vital Info (Version 2.2)
 [ TrialInfo, SubjectParams ] = GetVitals( vicon, 'R', S );
+[~, TrialName]=vicon.GetTrialName;
+[ validated ] = viconSanityCheck( TrialName, vicon );
 %% Save Data
 clearvars -Except ModelOutput ModelOutputHelp S trajectories...
     TrajectoryHelp ForcePlateData vicon velocities accelerations...
     FootEventStruct FootEventCell EMGTable RightStancePhase...
     LeftStancePhase RightSwingPhase LeftSwingPhase RightStride LeftStride...
     FileLocation Errors errorCount ToPull EMGProcessed FPD saveFile...
-    TrialInfo SubjectParams
+    TrialInfo SubjectParams TrialName
 MarkerNames=vicon.GetMarkerNames(S)';
 
 %Put filepath here for where you want to save data
 cd(saveFile)
 
-[~, TrialName]=vicon.GetTrialName;
 fprintf('Finished with trial %s \n', TrialName)
 save(TrialName);
