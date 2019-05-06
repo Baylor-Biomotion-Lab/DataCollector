@@ -55,6 +55,36 @@ Files which serve a useful purpose, but do not contribute *as much* to the main 
 
 # Utilizing Data from VAC DataCollector
 Data from DataCollector is saved as a .mat file and uses the same name as the trial name in Vicon. It contains nearly all the output data from Vicon.
+## Variables Generated
+I want to say that, when looking at the variables, there are a lot of either redundant or useful variables. Unfortunately this project was started without a lot of planning and that is an unfortunate outcome. However, the DataCollector available currently should be able to get you most if not all of the information you need.
+
+| Variable Name  | Function |
+| ------------- | ------------- |
+| ```Accelerations```  | Marker accelerations in (x,y,z)  |
+| ```EMGProcessed```  | NaN  |
+| ```EMGTable```  | Raw EMG signals  |
+| ```FootEventCell```  | Toe offs/Foot strikes and when/where they happened  |
+| ```FootEventStruct```  | Redundant ```FootEventCell```  |
+| ```ForcePlateData```  | Self explanatory  |
+| ```FPD```  | Cell version of ```ForcePlateData``` which is easier to access |
+| ```LeftStancePhase```  | When and where the left stance phase occurred, where the third column has the force plate number  |
+| ```LeftStride```  | Self explanatory (see left stance phase) |
+| ```LeftSwingPhase```  | Self explanatory (see left stance phase)  |
+| ```Marker Names```  | List of all names of markers. The index of the marker name corresponds to ```trajectories```, etc.  |
+| ```ModelOutput```  | Contains kinematic information  |
+| ```ModelOutputHelp```  | Also contains kinematic information, but adds on marker names  |
+| ```RightStancePhase```  | Self explanatory (see left stance phase)  |
+| ```RightStride``` | Self explanatory (see left stance phase)  |
+| ```RightSwingPhase```  | Self explanatory (see left stance phase) |
+| ```S```  | Subject name. Commonly used to interface with Vicon  |
+| ```saveFile```  | Where the .mat file will be saved  |
+| ```SubjectParams```  | Subject information such as height, weight, etc.  |
+| ```trajectories```  | Marker trajectories in (x,y,z)  |
+| ```TrialInfo```  | Useful misc. info about the trial such as frame rates  |
+| ```TrialName``` | Self explanatory  |
+| ```velocities```  | Marker velocities in (x,y,z)  |
+| ```vicon```  | A class generated when interfacing with Vicon Nexus  |
+
 ## Kinematics
 Kinematic data is found in ModelOutputHelp, which is data type table. Column 2 has all of the model outputs from Vicon (hip angles, knee moments, etc.). Model outputs from Vicon will change from file to file depending on a number of variables, so you'll have to find what row corresponds to what variable. 
 For example, if we wanted to find right hip angles we would type:
@@ -65,14 +95,14 @@ Then we will use this to access this row and grab the flexion angles:
 ```
 RHipFlexion = (ModelOutputHelp{varNo,3}{1}(:,1))
 ```
-This is a bit complicated, so I've written a helper function to make it easier to perform. It will also auto-plot the data for you. If I wanted to plot it using the helper function I would type:
-```
-hipData = prettyPlots('trial','R_Subj10_Free_335_TR02','whole','RHipAngles','x',0);
-```
-It would generate the following figure:
-![alt text](https://github.com/Baylor-Biomotion-Lab/Images/blob/master/hip%20flexion.png "Example Flexion")
-Information for the prettyPlots function can be found by typing:
-```
-help prettyPlots
-```
-into the command window. Note I will expect you to be able to use this on all functions you write and use that are considered "finalized". One last thing to note is that the data for kinematics is a matrix inside of a cell inside of a table. Definitely not the most ideal way to access the data. Anyway the data in the matrix is stored in 3 columns. Column 1 is generally flexion/extension, column 2 is ad/abduction, and column 3 is internal/external rotation. 
+We could then plot this, find the range of motion, etc. 
+
+# Troubleshooting DataCollector
+#### A popup box told me that it wasn't on the path? 
+Add all of the files to MATLAB's search path. Read more about this [here](https://www.mathworks.com/help/matlab/matlab_env/what-is-the-matlab-search-path.html). This probably means you need to get a little bit more experience in MATLAB. 
+
+#### I got an error that says ```Error using cd```?
+Change the variable ```safeFile``` to a directory on your computer that exists. 
+
+#### I want to get X variable from Vicon?
+In order to learn more about the interface between MATLAB and Vicon, type ```doc ViconNexus``` into the command window. This should bring up a help file which contains information pertaining to getting more information from Vicon Nexus.
