@@ -27,18 +27,9 @@ MATLAB software for importing Vicon biomotion data.
 1. In the user input section, set ```ModifyFootEvents``` to 0. When you have determined that foot events should be added, set it to 1. 
 2. Change ```saveFile``` to wherever you want to save the file. 
 ## When Using Vicon:
-1. In Vicon Nexus 2.6.x, set up a new pipeline. 
-   * If there is a DataCollector pipeline, do not create a new pipeline. 
-   * Ensure that the pipeline is marked as "private" to avoid errors. 
-2. Add the following operations to the pipeline:
-   * Autocorrelate Events
-   * Detect Events From Forceplate
-   * Run MatLab Operation
-     * In the Properties section of the operation, set "Matlab script file: " to the location of the DataCollector.m script.
-3. Process data as usual. 
-4. Run the DataCollector pipeline. 
+To find out how to incorporate DataCollector into the full Vicon workflow, see the lab's SOP Section 6. 
 
-A .mat file will be saved in the same directory as saveFile (get it?).
+A .mat file will be saved in the same directory as saveFile.
 # File Directory
 ## Main Files
 The main script is called DataCollector.m. All functions are called by this script, and any debugging should start here. The rest are the primary functions which call any subfunctions to accomplish their tasks. 
