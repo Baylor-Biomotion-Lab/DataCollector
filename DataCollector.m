@@ -1,10 +1,12 @@
 %DataCollector is the main script for collecting and analyzing Vicon data
 % For more help, visit our Github page:
 % https://github.com/Baylor-Biomotion-Lab/DataCollector
+clc
 clear
 %% User Input
 ModifyFootEvents=0; %Set to 1 if you want to put in your own foot events
-saveFile='H:\Research\MATLAB\VAC\CollectedData\VRehabVive';
+saveFile='H:\Research\MATLAB\VAC\CollectedData\'; % Where you want to save the final data
+% dataLocation = 'R:\ViconBackup\Utari\20180817\20180817'; % The location of the Vicon file
 %% Model Output Information
 vicon=ViconNexus(); %for more info put doc ViconNexus into command line
 vicon.Connect()
@@ -45,20 +47,31 @@ disp('Trajectories successfully imported...')
 [FootEventCell, RightStancePhase, LeftStancePhase, RightSwingPhase, LeftSwingPhase]=GaitFinder(FootEventCell, trajectories, vicon, S);
 [ModelOutput, ModelOutputHelp, FootEventCell, GaitFail]=MaxMin(ModelOutput,ModelOutputHelp, FootEventCell, RightStancePhase, LeftStancePhase, RightSwingPhase, LeftSwingPhase);
 disp('Data successfully analyzed...')
-if GaitFail~=1 
+if GaitFail~=1
     [RightStride, LeftStride]=  StrideFinder(RightSwingPhase, LeftSwingPhase, RightStancePhase, LeftStancePhase, trajectories, vicon, S);
 end
-%% Vital Info (Version 2.2)
+
+%% Vital Info
 [ TrialInfo, SubjectParams ] = GetVitals( vicon, 'R', S );
 [~, TrialName]=vicon.GetTrialName;
-[ validated ] = viconSanityCheck( TrialName, vicon );
+%% Get time created/ended
+try
+    cd(dataLocation)
+    [startTime, endTime] = readDateTime([TrialName '.xcp'], TrialInfo);
+catch
+    warning('Could not access trial date/time, try changing dataLocation variable')
+    startTime = NaN;
+    endTime = NaN;
+end
+TrialInfo.startTime = startTime;
+TrialInfo.endTime = endTime;
 %% Save Data
 clearvars -Except ModelOutput ModelOutputHelp S trajectories...
     TrajectoryHelp ForcePlateData vicon velocities accelerations...
     FootEventStruct FootEventCell EMGTable RightStancePhase...
     LeftStancePhase RightSwingPhase LeftSwingPhase RightStride LeftStride...
     FileLocation Errors errorCount ToPull EMGProcessed FPD saveFile...
-    TrialInfo SubjectParams TrialName
+    TrialInfo SubjectParams TrialName startTime endTime
 MarkerNames=vicon.GetMarkerNames(S)';
 
 %Put filepath here for where you want to save data
