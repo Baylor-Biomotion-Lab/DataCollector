@@ -93,7 +93,7 @@ We could then plot this, find the range of motion, etc.
 Add all of the files to MATLAB's search path. Read more about this [here](https://www.mathworks.com/help/matlab/matlab_env/what-is-the-matlab-search-path.html). This probably means you need to get a little bit more experience in MATLAB. 
 
 #### I got an error that says ```Error using cd```?
-Change the variable ```safeFile``` to a directory on your computer that exists. 
+Change the variable ```saveFile``` to a directory on your computer that exists. 
 
 #### I want to get X variable from Vicon?
 In order to learn more about the interface between MATLAB and Vicon, type ```doc ViconNexus``` into the command window. This should bring up a help file which contains information pertaining to getting more information from Vicon Nexus.
